@@ -32,23 +32,13 @@
                 </a>
             </div>
             <ul class="dream-list">
-                <li class="dream-list_item">
-                    <input class="dream-check" type="checkbox" name="dream-check" id="dream-check-1" checked>
-                    <label for="dream-check-1">Lära mig HTML/CSS, <span class="dream-theme">teknikdrömmar</span></label>
-                    <button type="button"><img src="../assets/images/trash_delete.png"></button>
-                </li>
-                <li class="dream-list_item">
-                    <input class="dream-check" type="checkbox" name="dream-check" id="dream-check-2">
-                    <label for="dream-check-2">Lära mig TypeScript, <span
-                            class="dream-theme">teknikdrömmar</span></label>
-                    <button type="button"><img src="../assets/images/trash_delete.png"></button>
-                </li>
-                <li class="dream-list_item">
-                    <input class="dream-check" type="checkbox" name="dream-check" id="dream-check-3">
-                    <label for="dream-check-3">En dröm som tar flera rader lorem ipsum, <span
-                            class="dream-theme">vardagsdrömmar</span></label>
-                    <button type="button"><img src="../assets/images/trash_delete.png"></button>
-                </li>
+                <template class="dream-template">
+                    <li class="dream-list_item">
+                        <input class="dream-check" type="checkbox" name="dream-check">
+                        <label class="dream-label"><span class="dream-name"></span> <span class="dream-theme"></span></label>
+                        <button class="delete-btn" type="button"><img src="../assets/images/trash_delete.png"></button>
+                    </li>
+                </template>
             </ul>
         </section>
     </main>

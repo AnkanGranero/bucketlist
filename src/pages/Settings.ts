@@ -1,14 +1,15 @@
 // här är det bara level-up!
-import { name, themes } from "../models/variables.js";
+import { userName, themes } from "../store/globalVariables"
+import { elementNullCheck } from "../utils/domHelpers.js";
 
-const nameInput = document.getElementById("name-input") as HTMLInputElement;
-nameInput.value = name;
+const nameInput = elementNullCheck<HTMLInputElement>("name-input");
+nameInput.value = userName.value;
 
 const themeList = document.getElementById("theme-list") as HTMLUListElement;
 if (themeList) {
-    themes.forEach(theme => {
+   Object.keys(themes).forEach((key) => {
         const li = document.createElement("li");
-        li.innerHTML = `<p>${theme}</p> <img src="../assets/images/trash_delete.png" />`;
+        li.innerHTML = `<p>${themes[key]}</p> <img src="../assets/images/trash_delete.png" />`;
         themeList.appendChild(li);
     });
 }

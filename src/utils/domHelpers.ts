@@ -1,6 +1,6 @@
 // Nullkontroll
 
-import { stringRef } from "../models/types";
+import { stringRef, ValueElement } from "../models/types";
 
 export function elementNullCheck<T extends HTMLElement>(selector: string): T {
   const el = document.querySelector<T>(selector);
@@ -8,8 +8,8 @@ export function elementNullCheck<T extends HTMLElement>(selector: string): T {
   return el;
 }
 
-export function bindInputToVar(input: HTMLInputElement, target: stringRef): void {
-    input.addEventListener("change", (): void => {
-        target.value = input.value;
+export function bindElementToVar(element: ValueElement, target: stringRef): void {
+    element.addEventListener("change", (): void => {
+        target.value = element.value;
     })
 }

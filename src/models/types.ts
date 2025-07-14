@@ -8,3 +8,7 @@ export interface Dream {
 export type stringRef = {
     value: string
 }
+
+export type ValueElement = HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement;
+
+export type ThemeMap = Record<string, string>;

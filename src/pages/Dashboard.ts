@@ -1,11 +1,13 @@
 import { elementNullCheck } from "../utils/domHelpers.js"
 import { Dream } from "../models/types";
 import { dreams } from "../store/globalVariables.js";
-import { addDreamsToLocalStorage, getDreamsFromLocalStorage } from "../utils/localStorageHelpers.js";
+import { addDreamsToLocalStorage, getDreamsFromLocalStorage, getUsernameFromLocalStorage } from "../utils/localStorageHelpers.js";
 
 const dreamList = elementNullCheck<HTMLUListElement>(".dream-list");
 
 const template = elementNullCheck<HTMLTemplateElement>(".dream-template");
+const username = elementNullCheck<HTMLSpanElement>("#user-name");
+username.innerText = getUsernameFromLocalStorage();
 
 function renderDream(dream: Dream): void {
     const clone = template.content.cloneNode(true) as DocumentFragment;

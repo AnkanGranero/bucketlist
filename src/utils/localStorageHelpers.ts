@@ -1,5 +1,12 @@
-import { dreams } from "../store/globalVariables.js"
+import { dreams, username } from "../store/globalVariables.js"
 import { Dream } from "../models/types.js";
+
+export function addUsernameToLocalStorage(username: string): void {
+    localStorage.setItem("username", username);
+}
+export function getUsernameFromLocalStorage():string {
+     return localStorage.getItem("username") || username.value;
+}
 
 export function addDreamsToLocalStorage(dreams: Dream[]): void {
     const dreamsAsString = JSON.stringify(dreams);

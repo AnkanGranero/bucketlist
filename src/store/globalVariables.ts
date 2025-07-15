@@ -1,7 +1,7 @@
 import { stringRef } from "../models/types"
 import { Dream,ThemeMap } from "../models/types";
 
-export const userName: stringRef = { value: "" }
+export const username: stringRef = { value: "" }
 
 
 

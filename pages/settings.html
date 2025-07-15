@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/settings.css">
     <title>BUCKETLIST - Inställningar</title>
-    <script type="module" src="../dist/pages/Settings.js"></script>
+    <script type="module" src="../dist/pages/Settings.js" defer></script>
 </head>
 
 <body>
@@ -25,11 +25,11 @@
     </header>
     <main>
         <h4>Användarinfo</h4>
-        <div class="change-name">
+        <form class="change-name">
             <label for="name-input" class="visually-hidden">Ändra användarnamn:</label>
-            <input id="name-input" type="text" placeholder="Ditt användarnamn" />
-            <button type="button" aria-label="Spara nytt användarnamn" class="confirm-input">Spara</button>
-        </div>
+            <input id="name-input" type="text" placeholder="Ditt användarnamn" required/>
+            <button type="submit" id="btn-save" aria-label="Spara nytt användarnamn" class="confirm-input">Spara</button>
+        </form>
         <h4>Drömteman</h4>
         <ul id="theme-list"></ul>
         <h4>Lägg till nytt tema:</h4>

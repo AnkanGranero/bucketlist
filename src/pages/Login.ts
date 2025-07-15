@@ -2,19 +2,19 @@
 
 // spara namn i globala variabeln
 
-import { bindElementToVar } from "../utils/domHelpers";
-import { stringRef } from "../models/types";
-import { userName } from "../store/globalVariables";
+import { bindElementToVar } from "../utils/domHelpers.js";
+import { username } from "../store/globalVariables.js";
 
 
-import { elementNullCheck } from "../utils/domHelpers";
+import { elementNullCheck } from "../utils/domHelpers.js";
+import { addUsernameToLocalStorage } from "../utils/localStorageHelpers.js";
 
 const loginForm = elementNullCheck<HTMLFormElement>("#login-form");
 
-const userNameInput = elementNullCheck<HTMLInputElement>("#username");
+const usernameInput = elementNullCheck<HTMLInputElement>("#username");
 
-bindElementToVar(userNameInput, userName);
+bindElementToVar(usernameInput, username);
 
 loginForm.addEventListener("submit", (event: Event): void => {
-    event.preventDefault();
+    addUsernameToLocalStorage(usernameInput.value);
 })

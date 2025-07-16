@@ -35,10 +35,23 @@
      justify-self: end;
  }
 
- .change-name, .add-theme {
-    display: grid;
-    gap: 0.2rem;
-    grid-template-columns: 3fr 1fr;
+ .change-name,
+ .add-theme {
+     display: grid;
+     gap: 0.2rem;
+     grid-template-columns: 3fr 1fr;
+ }
+
+ .btn-delete {
+     background: none;
+     padding: 0;
+     margin: 0;
+     cursor: pointer;
+
+     > img {
+        display: block;
+     }
+
  }
 
  @keyframes shake {

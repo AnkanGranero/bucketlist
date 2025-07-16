@@ -1,13 +1,20 @@
 import { elementNullCheck } from "../utils/domHelpers.js";
 import { bindElementToVar } from "../utils/domHelpers.js";
 import { stringRef, Dream } from "../models/types.js";
-import { dreams } from "../store/globalVariables.js";
-import { addDreamsToLocalStorage } from "../utils/localStorageHelpers.js";
+import { addToLS, getFromLS } from "../utils/localStorageHelpers.js";
 
-
+const dreams = getFromLS("dreams");
 const addDreamForm = elementNullCheck<HTMLFormElement>("#add-dream-form");
 const dreamInput = elementNullCheck<HTMLInputElement>("#dream");
-const themeSelect = elementNullCheck<HTMLSelectElement>("#dream-select")
+const themeSelect = elementNullCheck<HTMLSelectElement>("#dream-select");
+
+const themes = getFromLS("themes");
+themes.forEach(theme => {
+    const option = document.createElement("option") as HTMLOptionElement;
+    option.innerText = theme.name;
+    option.value = theme.name;
+    themeSelect.appendChild(option);
+})
 
 const dreamName: stringRef = { value: "" };
 const selectedTheme: stringRef = { value: "" }
@@ -22,8 +29,7 @@ addDreamForm.addEventListener("submit", (event: Event): void => {
         theme: selectedTheme.value,
         checked: false,
     }
-    dreams.push(newDream);
-    addDreamsToLocalStorage(dreams);
+    addToLS([newDream], "dreams");
     window.location.href = "dashboard.html";
 
 })

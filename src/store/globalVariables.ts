@@ -1,17 +1,18 @@
 import { stringRef } from "../models/types"
-import { Dream,ThemeMap } from "../models/types";
+import { Dream, Theme } from "../models/types";
 
 export const username: stringRef = { value: "" }
 
 
 
-export const themes:ThemeMap = {
-    teknik: "teknikdrömmar",
-    vardag: "vardagsdrömmar",
-    hus: "husdrömmar",
-    sport: "sportdrömmar",
-    res: "resdrömmar"
-}
+
+export const themes: Theme[] = [
+    { id: 1, name: "teknikdrömmar" },
+    { id: 2, name: "vardagsdrömmar" },
+    { id: 3, name: "husdrömmar" },
+    { id: 4, name: "sportdrömmar" },
+    { id: 5, name: "resdrömmar" },
+]
 
 export const dreams: Dream[] = [{
     id: 1,

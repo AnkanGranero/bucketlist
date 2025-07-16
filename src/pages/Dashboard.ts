@@ -1,13 +1,12 @@
 import { elementNullCheck } from "../utils/domHelpers.js"
 import { Dream } from "../models/types";
-import { dreams } from "../store/globalVariables.js";
-import { addDreamsToLocalStorage, getDreamsFromLocalStorage, getUsernameFromLocalStorage } from "../utils/localStorageHelpers.js";
+import { addDreamsToLocalStorage, getFromLS } from "../utils/localStorageHelpers.js";
 
 const dreamList = elementNullCheck<HTMLUListElement>(".dream-list");
 
 const template = elementNullCheck<HTMLTemplateElement>(".dream-template");
 const username = elementNullCheck<HTMLSpanElement>("#user-name");
-username.innerText = getUsernameFromLocalStorage();
+username.innerText = getFromLS('username', );
 
 function renderDream(dream: Dream): void {
     const clone = template.content.cloneNode(true) as DocumentFragment;
@@ -29,7 +28,7 @@ function renderDream(dream: Dream): void {
     deleteBtn.dataset.id = String(dream.id);
 
     input.addEventListener("change", () => {
-        const oldDreams = getDreamsFromLocalStorage() || dreams;
+        const oldDreams = getFromLS("dreams");
 
         const updated = oldDreams.map(d => {
             if (d.id === dream.id) {
@@ -49,17 +48,12 @@ function renderDream(dream: Dream): void {
 
 function renderAllDreams() {
     dreamList.innerHTML = "";
-    const currentDreams = getDreamsFromLocalStorage() || dreams;
+    const currentDreams = getFromLS("dreams");
+    
+    
     currentDreams.forEach(renderDream);
 }
-const dreamsFromLS = getDreamsFromLocalStorage();
 
-if (dreamsFromLS) {
-    dreamsFromLS.forEach(dream => renderDream(dream))
-}
-else {
-    dreams.forEach(dream => renderDream(dream))
-}
 
 dreamList.addEventListener("click", (event: Event) => {
     const target = event.target as HTMLElement;
@@ -68,10 +62,12 @@ dreamList.addEventListener("click", (event: Event) => {
 const deleteBtn = target.closest(".delete-btn");
 if (deleteBtn) {
     const id = Number(deleteBtn.getAttribute("data-id"));
-    const oldDreams = getDreamsFromLocalStorage() || dreams;
-    const updatedDreams = oldDreams.filter(d => d.id !== id);
+    const dreamsFromLS =  getFromLS("dreams");
+    const updatedDreams = dreamsFromLS.filter(d => d.id !== id);
     addDreamsToLocalStorage(updatedDreams);
     renderAllDreams();
 }
 
 })
+
+renderAllDreams();

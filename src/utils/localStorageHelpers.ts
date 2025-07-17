@@ -13,29 +13,25 @@ export const LS = {
     },
     remove(key: LSkeys): void {
         localStorage.removeItem(key);
+    },
+    getParsedFromLS<T>(key: LSkeys, fallback: T): T {
+        const raw = LS.get(key);
+        if (!raw) return fallback;
+        try {
+            return JSON.parse(raw) as T;
+        } catch (error) {
+            console.warn(`could not parse key ${key}`, error);
+            return fallback;
+        }
+    },
+    setArrayOrRemove<T>(key: LSkeys, array: T[]): void {
+        if (array.length) {
+            LS.add(key, JSON.stringify(array));
+        } else {
+            LS.remove(key);
+        }
     }
 
 }
 
-export function getParsedFromLS<T>(key:LSkeys, fallback: T):T {
-    const raw = LS.get(key);
-    if(!raw) return fallback;
-    try {
-        return JSON.parse(raw) as T;
-    } catch(error) {
-        console.warn(`could not parse key ${key}`, error);
-        return fallback;
-    }
-}
 
-export function createNewId<T extends { id: number }>(array: T[]): number {
-    return Math.max(0, ...array.map(item => item.id)) + 1;
-}
-
-export function setArrayOrRemove<T>(key: LSkeys, array: T[]): void {
-  if (array.length) {
-    LS.add(key, JSON.stringify(array));
-  } else {
-    LS.remove(key);
-  }
-}

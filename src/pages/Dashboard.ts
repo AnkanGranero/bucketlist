@@ -1,14 +1,13 @@
 import { elementNullCheck } from "../utils/domHelpers.js"
 import { Dream } from "../models/types";
-import { dreams } from "../store/globalVariables.js";
-import { addDreamsToLocalStorage, getDreamsFromLocalStorage, getUsernameFromLocalStorage } from "../utils/localStorageHelpers.js";
+import { deleteDream, getDreams, updateDream } from "../services/DreamService.js";
+import { getUsername } from "../services/UserService.js";
 
 const dreamList = elementNullCheck<HTMLUListElement>(".dream-list");
 
 const template = elementNullCheck<HTMLTemplateElement>(".dream-template");
 const username = elementNullCheck<HTMLSpanElement>("#user-name");
-username.innerText = getUsernameFromLocalStorage();
-
+username.innerText = getUsername();
 function renderDream(dream: Dream): void {
     const clone = template.content.cloneNode(true) as DocumentFragment;
 
@@ -18,7 +17,7 @@ function renderDream(dream: Dream): void {
     const themeSpan = clone.querySelector(".dream-theme") as HTMLSpanElement;
     const deleteBtn = clone.querySelector(".delete-btn") as HTMLButtonElement;
 
-    
+
     input.id = `dream-check-${dream.id}`;
     input.name = `dream-check-${dream.id}`;
     input.checked = dream.checked;
@@ -29,16 +28,8 @@ function renderDream(dream: Dream): void {
     deleteBtn.dataset.id = String(dream.id);
 
     input.addEventListener("change", () => {
-        const oldDreams = getDreamsFromLocalStorage() || dreams;
-
-        const updated = oldDreams.map(d => {
-            if (d.id === dream.id) {
-
-                return { ...d, checked: input.checked };
-            }
-            return d;
-        })
-        addDreamsToLocalStorage(updated);
+        dream.checked = input.checked;
+        updateDream(dream);
     });
 
 
@@ -49,29 +40,25 @@ function renderDream(dream: Dream): void {
 
 function renderAllDreams() {
     dreamList.innerHTML = "";
-    const currentDreams = getDreamsFromLocalStorage() || dreams;
+    const currentDreams = getDreams();
+
+
     currentDreams.forEach(renderDream);
 }
-const dreamsFromLS = getDreamsFromLocalStorage();
 
-if (dreamsFromLS) {
-    dreamsFromLS.forEach(dream => renderDream(dream))
-}
-else {
-    dreams.forEach(dream => renderDream(dream))
-}
 
 dreamList.addEventListener("click", (event: Event) => {
     const target = event.target as HTMLElement;
-    
 
-const deleteBtn = target.closest(".delete-btn");
-if (deleteBtn) {
-    const id = Number(deleteBtn.getAttribute("data-id"));
-    const oldDreams = getDreamsFromLocalStorage() || dreams;
-    const updatedDreams = oldDreams.filter(d => d.id !== id);
-    addDreamsToLocalStorage(updatedDreams);
-    renderAllDreams();
-}
+
+    const deleteBtn = target.closest(".delete-btn");
+    if (deleteBtn) {
+        const id = Number(deleteBtn.getAttribute("data-id"));
+        deleteDream(id);
+        renderAllDreams();
+    }
 
 })
+
+
+renderAllDreams();

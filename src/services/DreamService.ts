@@ -1,5 +1,4 @@
 import { Dream, newDream } from "../models/types";
-import { dreams } from "../store/globalVariables.js";
 import { LS, } from "../utils/localStorageHelpers.js";
 import { createNewId } from "../utils/dataHelpers.js"
 
@@ -29,5 +28,9 @@ export function deleteDream(id: number): void {
     const currentDreams = LS.getParsedFromLS<Dream[]>("dreams", []);
     const updatedDreams = currentDreams.filter(dream => dream.id !== id);
 
-    LS.setArrayOrRemove<Dream>("dreams", updatedDreams);
+        if (updatedDreams.length) {
+            LS.add("dreams", JSON.stringify(updatedDreams));
+        } else {
+            LS.remove("dreams"); // if it was the last item in the list
+        }
 }

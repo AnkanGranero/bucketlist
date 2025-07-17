@@ -24,14 +24,6 @@ export const LS = {
             return fallback;
         }
     },
-    setArrayOrRemove<T>(key: LSkeys, array: T[]): void {
-        if (array.length) {
-            LS.add(key, JSON.stringify(array));
-        } else {
-            LS.remove(key);
-        }
-    }
-
 }
 
 

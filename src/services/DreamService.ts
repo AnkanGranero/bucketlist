@@ -4,7 +4,7 @@ import { LS, } from "../utils/localStorageHelpers.js";
 import { createNewId } from "../utils/dataHelpers.js"
 
 export function getDreams(): Dream[] {
-    return LS.getParsedFromLS<Dream[]>("dreams", dreams);
+    return LS.getParsedFromLS<Dream[]>("dreams", []);
 }
 
 export function addDream(newDream: newDream): void {
@@ -18,7 +18,7 @@ export function addDream(newDream: newDream): void {
 }
 
 export function updateDream(updatedDream: Dream): void {
-    const currentDreams = LS.getParsedFromLS<Dream[]>("dreams", dreams);
+    const currentDreams = LS.getParsedFromLS<Dream[]>("dreams", []);
     const updatedDreams = currentDreams.map(dream => dream.id === updatedDream.id ? updatedDream : dream);
 
     LS.add("dreams", JSON.stringify(updatedDreams))
@@ -26,7 +26,7 @@ export function updateDream(updatedDream: Dream): void {
 }
 
 export function deleteDream(id: number): void {
-    const currentDreams = LS.getParsedFromLS<Dream[]>("dreams", dreams);
+    const currentDreams = LS.getParsedFromLS<Dream[]>("dreams", []);
     const updatedDreams = currentDreams.filter(dream => dream.id !== id);
 
     LS.setArrayOrRemove<Dream>("dreams", updatedDreams);

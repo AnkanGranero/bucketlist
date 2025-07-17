@@ -8,7 +8,6 @@ const dreamList = elementNullCheck<HTMLUListElement>(".dream-list");
 const template = elementNullCheck<HTMLTemplateElement>(".dream-template");
 const username = elementNullCheck<HTMLSpanElement>("#user-name");
 username.innerText = getUsername();
-
 function renderDream(dream: Dream): void {
     const clone = template.content.cloneNode(true) as DocumentFragment;
 
@@ -60,5 +59,6 @@ dreamList.addEventListener("click", (event: Event) => {
     }
 
 })
+
 
 renderAllDreams();

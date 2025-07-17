@@ -1,20 +1,22 @@
 // här är det bara level-up!
+import { addTheme, deleteTheme, getThemes } from "../services/ThemeService.js";
+import { getUsername } from "../services/UserService.js";
 import { elementNullCheck } from "../utils/domHelpers.js";
-import { removeFromLSArray } from "../utils/localStorageHelpers.js";
-import { addThemeToLocalStorage, addToLS, getFromLS } from "../utils/localStorageHelpers.js";
+import { LS } from "../utils/localStorageHelpers.js"
 
 const changeNameForm = elementNullCheck<HTMLFormElement>(".change-name")
 const nameInput = elementNullCheck<HTMLInputElement>("#name-input");
 const themeInput = elementNullCheck<HTMLInputElement>("#theme-input");
 const addThemeForm = elementNullCheck<HTMLFormElement>(".add-theme");
 
-nameInput.value = getFromLS("username");
+nameInput.value = getUsername();
 
 changeNameForm.addEventListener("submit", (event: Event) => {
     event.preventDefault()
 
     if (nameInput.value.trim()) {
-        addToLS("username", nameInput.value);
+        LS.add("username", nameInput.value);
+        nameInput.value = "";
     }
 });
 
@@ -24,7 +26,7 @@ const themeList = document.getElementById("theme-list") as HTMLUListElement;
 function renderThemes(): void {
     if (themeList) {
         themeList.innerHTML = "";
-        getFromLS("themes").forEach(theme => {
+        getThemes().forEach(theme => {
             const li = document.createElement("li");
             li.dataset.id = theme.id.toString();
             li.innerHTML = `<p>${theme.name}</p> <button class="btn-delete" data-id="${theme.id}" aria-label="Delete theme"><img src="../assets/images/trash_delete.png"<button/>`;
@@ -39,7 +41,7 @@ addThemeForm.addEventListener("submit", (event: Event) => {
 
     if (themeInput.value.trim()) {
 
-        addThemeToLocalStorage(themeInput.value)
+        addTheme(themeInput.value)
     }
     renderThemes();
     themeInput.value = "";
@@ -52,7 +54,7 @@ themeList.addEventListener("click", (event: Event) => {
     const id = button.dataset.id;
     if (!id) return;
 
-    removeFromLSArray("themes", id);
+    deleteTheme(Number(id));
     renderThemes();
 
 
@@ -67,5 +69,3 @@ function logOut(): void {
 
 
 renderThemes();
-
-// lägg till hantering av teman

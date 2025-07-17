@@ -1,12 +1,13 @@
 import { elementNullCheck } from "../utils/domHelpers.js"
 import { Dream } from "../models/types";
-import { addToLS, getFromLS, removeFromLSArray, updateDreamFields } from "../utils/localStorageHelpers";
+import { deleteDream, getDreams, updateDream } from "../services/DreamService.js";
+import { getUsername } from "../services/UserService.js";
 
 const dreamList = elementNullCheck<HTMLUListElement>(".dream-list");
 
 const template = elementNullCheck<HTMLTemplateElement>(".dream-template");
 const username = elementNullCheck<HTMLSpanElement>("#user-name");
-username.innerText = getFromLS('username',);
+username.innerText = getUsername();
 
 function renderDream(dream: Dream): void {
     const clone = template.content.cloneNode(true) as DocumentFragment;
@@ -28,8 +29,8 @@ function renderDream(dream: Dream): void {
     deleteBtn.dataset.id = String(dream.id);
 
     input.addEventListener("change", () => {
-
-        updateDreamFields(dream.id, {checked : input.checked});
+        dream.checked = input.checked;
+        updateDream(dream);
     });
 
 
@@ -40,7 +41,7 @@ function renderDream(dream: Dream): void {
 
 function renderAllDreams() {
     dreamList.innerHTML = "";
-    const currentDreams = getFromLS("dreams");
+    const currentDreams = getDreams();
 
 
     currentDreams.forEach(renderDream);
@@ -54,7 +55,7 @@ dreamList.addEventListener("click", (event: Event) => {
     const deleteBtn = target.closest(".delete-btn");
     if (deleteBtn) {
         const id = Number(deleteBtn.getAttribute("data-id"));
-        removeFromLSArray("dreams" ,id);
+        deleteDream(id);
         renderAllDreams();
     }
 

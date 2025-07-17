@@ -1,14 +1,15 @@
 import { elementNullCheck } from "../utils/domHelpers.js";
 import { bindElementToVar } from "../utils/domHelpers.js";
-import { stringRef, newDream, Theme } from "../models/types.js";
-import { addToLS, getFromLS } from "../utils/localStorageHelpers";
+import { stringRef, newDream } from "../models/types.js";
+import { addDream, getDreams } from "../services/DreamService.js";
+import { getThemes } from "../services/ThemeService.js";
 
-const dreams = getFromLS("dreams");
+const dreams = getDreams();
 const addDreamForm = elementNullCheck<HTMLFormElement>("#add-dream-form");
 const dreamInput = elementNullCheck<HTMLInputElement>("#dream");
 const themeSelect = elementNullCheck<HTMLSelectElement>("#dream-select");
 
-const themes = getFromLS("themes") as Theme[];
+const themes = getThemes();
 themes.forEach(theme => {
     const option = document.createElement("option") as HTMLOptionElement;
     option.innerText = theme.name;
@@ -27,7 +28,7 @@ addDreamForm.addEventListener("submit", (event: Event): void => {
         theme: selectedTheme.value,
         checked: false,
     }
-    addToLS("dreams", newDream);
+    addDream(newDream);
     window.location.href = "dashboard.html";
 
 })

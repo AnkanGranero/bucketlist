@@ -1,62 +1,62 @@
-🎯 Bucket List
+# 🎯 Bucket List
+
 A small vanilla TypeScript web app where users can log in with a username, create dreams (goals), and organize them into themes.
 
-All data is stored in localStorage, and no backend is required.
+All data is stored in `localStorage`, and no backend is required.
 
-🔧 Installation
-Clone the repo:
+---
 
-bash
-Kopiera
-Redigera
-git clone <repo-url>
-Install dependencies:
+## 🔧 Installation
 
-bash
-Kopiera
-Redigera
-npm install
-Start the TypeScript compiler in watch mode:
+1. Clone the repo:
 
-bash
-Kopiera
-Redigera
-npm run dev
-🚀 Usage
-You can run the app by opening pages/login.html in your browser. There’s no server — the app runs entirely in the browser using static HTML.
+   ```bash
+   git clone https://github.com/AnkanGranero/bucketlist
+   ```
 
-The flow as a developer:
+2. Install dependencies:
 
-Start at login.html
+   ```bash
+   npm install
+   ```
 
-Enter a username → it’s saved to localStorage and you're redirected to dashboard.html
+3. Start the TypeScript compiler in watch mode:
 
-In dashboard.html
+   ```bash
+   npm run dev
+   ```
 
-View all dreams
+---
 
-Mark dreams as checked/unchecked
+## 🚀 Usage
 
-Delete dreams
+You can run the app by opening `pages/login.html` in your browser.  
+There’s no server — the app runs entirely in the browser using static HTML.
 
-Add a new dream
+### Flow (as a developer)
 
-Go to pages/add-dream.html
+- **Start at** `login.html`  
+  Enter a username → it's saved to localStorage and you're redirected to `dashboard.html`.
 
-Select a theme and name → it's added to localStorage
+- **In** `dashboard.html`
+  - View all dreams
+  - Mark dreams as checked/unchecked
+  - Delete dreams
 
-Manage themes or username
+- **To add a new dream**
+  - Go to `pages/add-dream.html`
+  - Select a theme and name → it's added to localStorage
 
-Go to pages/settings.html
+- **To manage username or themes**
+  - Go to `pages/settings.html`
+  - Change username
+  - Add or remove dream themes
 
-Change username
+---
 
-Add/remove dream themes
+## 🧱 Structure
 
-🧱 Folder Structure
-pgsql
-Kopiera
-Redigera
+```
 bucketlist/
 ├── assets/               → images and icons
 ├── css/                  → styling files
@@ -64,19 +64,20 @@ bucketlist/
 ├── pages/                → HTML files
 ├── src/                  → source code
 │   ├── models/           → TypeScript types and interfaces
-│   ├── pages/            → scripts specific to each page
-│   ├── services/         → app logic per domain (e.g., dreams, themes)
-│   ├── store/            → global state variables (initial data)
-│   └── utils/            → reusable helpers (e.g., DOM, localStorage)
+│   ├── pages/            → scripts specific to each HTML page
+│   ├── services/         → app logic (e.g., dreams, themes)
+│   ├── store/            → global state variables
+│   └── utils/            → reusable helpers (DOM, localStorage, etc.)
 ├── package.json
 ├── tsconfig.json
 └── README.md             → you're reading this!
-⚙️ Tech Stack
-TypeScript
+```
 
-HTML + CSS
+---
 
-localStorage for persistence
+## ⚙️ Tech Stack
 
-No frameworks, just native DOM APIs
-
+- TypeScript
+- HTML + CSS
+- `localStorage` for persistence
+- No frameworks, just native DOM APIs

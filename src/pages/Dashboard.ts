@@ -1,12 +1,12 @@
 import { elementNullCheck } from "../utils/domHelpers.js"
 import { Dream } from "../models/types";
-import { addDreamsToLocalStorage, getFromLS } from "../utils/localStorageHelpers.js";
+import { addToLS, getFromLS, removeFromLSArray, updateDreamFields } from "../utils/localStorageHelpers";
 
 const dreamList = elementNullCheck<HTMLUListElement>(".dream-list");
 
 const template = elementNullCheck<HTMLTemplateElement>(".dream-template");
 const username = elementNullCheck<HTMLSpanElement>("#user-name");
-username.innerText = getFromLS('username', );
+username.innerText = getFromLS('username',);
 
 function renderDream(dream: Dream): void {
     const clone = template.content.cloneNode(true) as DocumentFragment;
@@ -17,7 +17,7 @@ function renderDream(dream: Dream): void {
     const themeSpan = clone.querySelector(".dream-theme") as HTMLSpanElement;
     const deleteBtn = clone.querySelector(".delete-btn") as HTMLButtonElement;
 
-    
+
     input.id = `dream-check-${dream.id}`;
     input.name = `dream-check-${dream.id}`;
     input.checked = dream.checked;
@@ -28,16 +28,8 @@ function renderDream(dream: Dream): void {
     deleteBtn.dataset.id = String(dream.id);
 
     input.addEventListener("change", () => {
-        const oldDreams = getFromLS("dreams");
 
-        const updated = oldDreams.map(d => {
-            if (d.id === dream.id) {
-
-                return { ...d, checked: input.checked };
-            }
-            return d;
-        })
-        addDreamsToLocalStorage(updated);
+        updateDreamFields(dream.id, {checked : input.checked});
     });
 
 
@@ -49,24 +41,22 @@ function renderDream(dream: Dream): void {
 function renderAllDreams() {
     dreamList.innerHTML = "";
     const currentDreams = getFromLS("dreams");
-    
-    
+
+
     currentDreams.forEach(renderDream);
 }
 
 
 dreamList.addEventListener("click", (event: Event) => {
     const target = event.target as HTMLElement;
-    
 
-const deleteBtn = target.closest(".delete-btn");
-if (deleteBtn) {
-    const id = Number(deleteBtn.getAttribute("data-id"));
-    const dreamsFromLS =  getFromLS("dreams");
-    const updatedDreams = dreamsFromLS.filter(d => d.id !== id);
-    addDreamsToLocalStorage(updatedDreams);
-    renderAllDreams();
-}
+
+    const deleteBtn = target.closest(".delete-btn");
+    if (deleteBtn) {
+        const id = Number(deleteBtn.getAttribute("data-id"));
+        removeFromLSArray("dreams" ,id);
+        renderAllDreams();
+    }
 
 })
 

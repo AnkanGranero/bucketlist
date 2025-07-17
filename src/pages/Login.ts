@@ -7,7 +7,7 @@ import { username } from "../store/globalVariables.js";
 
 
 import { elementNullCheck } from "../utils/domHelpers.js";
-import { addUsernameToLocalStorage } from "../utils/localStorageHelpers.js";
+import { addToLS } from "../utils/localStorageHelpers";
 
 const loginForm = elementNullCheck<HTMLFormElement>("#login-form");
 
@@ -16,5 +16,5 @@ const usernameInput = elementNullCheck<HTMLInputElement>("#username");
 bindElementToVar(usernameInput, username);
 
 loginForm.addEventListener("submit", (event: Event): void => {
-    addUsernameToLocalStorage(usernameInput.value);
+    addToLS("username",usernameInput.value);
 })

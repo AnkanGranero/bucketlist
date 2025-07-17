@@ -1,6 +1,7 @@
 // här är det bara level-up!
 import { elementNullCheck } from "../utils/domHelpers.js";
-import { addThemeToLocalStorage, addToLS, addUsernameToLocalStorage, getFromLS } from "../utils/localStorageHelpers.js";
+import { removeFromLSArray } from "../utils/localStorageHelpers.js";
+import { addThemeToLocalStorage, addToLS, getFromLS } from "../utils/localStorageHelpers.js";
 
 const changeNameForm = elementNullCheck<HTMLFormElement>(".change-name")
 const nameInput = elementNullCheck<HTMLInputElement>("#name-input");
@@ -13,7 +14,7 @@ changeNameForm.addEventListener("submit", (event: Event) => {
     event.preventDefault()
 
     if (nameInput.value.trim()) {
-        addUsernameToLocalStorage(nameInput.value);
+        addToLS("username", nameInput.value);
     }
 });
 
@@ -47,14 +48,11 @@ addThemeForm.addEventListener("submit", (event: Event) => {
 themeList.addEventListener("click", (event: Event) => {
     const target = event.target as HTMLElement;
     const button = target.closest(".btn-delete") as HTMLButtonElement;
-    console.log("button", button);
     if (!button) return;
     const id = button.dataset.id;
     if (!id) return;
 
-    const themes = getFromLS("themes");
-    const updatedThemes = themes.filter(theme => theme.id !== Number(id))
-    addToLS(updatedThemes, "themes");
+    removeFromLSArray("themes", id);
     renderThemes();
 
 
